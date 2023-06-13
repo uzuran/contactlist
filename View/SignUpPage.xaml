@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ct="http://schemas.communitytoolkit.org/maui"
              x:Class="ContactList.Pages.SignUpPage"
+             xmlns:local="clr-namespace:ContactList.ViewModels"
              Title="">
+    
+    <!-- Binding Context-->
+    <ContentPage.BindingContext>
+        <local:SignUpViewModel/>
+    </ContentPage.BindingContext>
 
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
@@ -62,7 +68,7 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="username.png"/>
                         </Frame>
-                        <Entry x:Name="UsernameEntry" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding Username}" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
@@ -74,14 +80,14 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="password.png"/>
                         </Frame>
-                        <Entry x:Name="PasswordEntry" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding Password}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
 
 
 
-            <Button Clicked="OnRegisterClicked"
+            <Button Command= "{Binding RegisterCommand}"
                     Grid.Row="6"
                     Text="SIGN UP"
                     BackgroundColor="#99ffcc"
@@ -94,12 +100,6 @@
 
         </Grid>
 
-
-
     </Grid>
-
-
-
-
-
+    
 </ContentPage>

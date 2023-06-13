@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ct="http://schemas.communitytoolkit.org/maui"
              x:Class="ContactList.Pages.SignUpPage"
              Title="">
 
@@ -61,7 +62,7 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="username.png"/>
                         </Frame>
-                        <Entry Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry x:Name="UsernameEntry" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
@@ -73,14 +74,15 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="password.png"/>
                         </Frame>
-                        <Entry Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry x:Name="PasswordEntry" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
 
 
 
-            <Button Grid.Row="6"
+            <Button Clicked="OnRegisterClicked"
+                    Grid.Row="6"
                     Text="SIGN UP"
                     BackgroundColor="#99ffcc"
                     TextColor="White"

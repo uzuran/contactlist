@@ -49,7 +49,7 @@ namespace ContactList.ViewModels
                     Username = Username,
                     Password = Password
                 };
-                
+
                 // Simulate a delay using Task.Delay before showing the alert
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 // Use userDataContext to add username, password to the database.
@@ -68,8 +68,10 @@ namespace ContactList.ViewModels
             {
                 // Handle the exception here (e.g., display an error message)
                 await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+                IsBusy = false; // Stop the activity indicator
             }
-
+               
+          
         }
     }
 }

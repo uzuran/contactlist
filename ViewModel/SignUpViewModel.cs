@@ -12,12 +12,8 @@ namespace ContactList.ViewModels
 
         public bool IsBusy
         {
-            get { return isBusy; }
-            set
-            {
-                isBusy = value;
-                OnPropertyChanged(nameof(IsBusy));
-            }
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
         }
 
         private string username;

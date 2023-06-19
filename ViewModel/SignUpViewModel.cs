@@ -1,60 +1,79 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using ContactList.Models;
-using Microsoft.EntityFrameworkCore;
+using MvvmHelpers.Commands;
 using System.Windows.Input;
+
 
 namespace ContactList.ViewModels
 {
     public class SignUpViewModel : ObservableObject
     {
+        private bool isBusy;
+
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                isBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        }
+
         private string username;
         public string Username
         {
-            get { return username; }
-            set { SetProperty(ref username, value); }
+            get => username;
+            set => SetProperty(ref username, value);
         }
 
         private string password;
         public string Password
         {
-            get { return password; }
-            set { SetProperty(ref password, value); }
+            get => password;
+            set => SetProperty(ref password, value);
         }
 
         public ICommand RegisterCommand { get; }
 
         public SignUpViewModel()
         {
-            RegisterCommand = new RelayCommand(Register);
+            RegisterCommand = new AsyncCommand(RegisterAsync);
         }
 
-        private void Register()
+        private async Task RegisterAsync()
         {
-            UserModel user = new UserModel
-            {
-                Username = Username,
-                Password = Password
-            };
+            IsBusy = true; // Start the activity indicator
 
             try
             {
+                // Create model for username, password.
+                var user = new UserModel
+                {
+                    Username = Username,
+                    Password = Password
+                };
+                
+                // Simulate a delay using Task.Delay before showing the alert
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                // Use userDataContext to add username, password to the database.
                 using (var db = new UserDataContext())
                 {
                     db.Users.Add(user);
                     db.SaveChanges();
                 }
+                IsBusy = false; // Stop the activity indicator
+
+
+                // Registration success alert.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Your registration is successful, {username}!", "OK");
             }
-            catch (DbUpdateException ex)
+            catch (Exception ex)
             {
-                Exception innerException = ex.InnerException;
-
-                // Extract details from the inner exception
-                string errorMessage = innerException.Message;
-                string stackTrace = innerException.StackTrace;
-
-
+                // Handle the exception here (e.g., display an error message)
+                await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
             }
+
         }
     }
 }

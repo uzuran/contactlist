@@ -85,8 +85,6 @@
                 </Frame>
             </StackLayout>
 
-
-
             <Button Command= "{Binding RegisterCommand}"
                     Grid.Row="6"
                     Text="SIGN UP"
@@ -97,6 +95,12 @@
                     WidthRequest="200"
                     HeightRequest="50"
                     Margin="0,15,0,0"/>
+            <!-- Activity indicator -->
+            <StackLayout>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            </StackLayout>
+           
+
 
         </Grid>
 

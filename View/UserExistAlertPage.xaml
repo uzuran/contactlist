@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactList.View.UserExistAlertPage"
+             Title="UserExistAlertPage">
+    
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+
+        <Label Text="This username exists" FontSize="15" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Button     
+                    Clicked="GoToSignUpPage"
+                    Grid.Row="6"
+                    Text="Ok"
+                    BackgroundColor="#99ffcc"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="30"
+                    WidthRequest="200"
+                    HeightRequest="50"
+                    Margin="0,15,0,0"/>
+
+    </StackLayout>
+</ContentPage>

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ContactList.Models;
+using ContactList.View;
 using MvvmHelpers.Commands;
 using System.Windows.Input;
 
@@ -7,7 +8,7 @@ using System.Windows.Input;
 namespace ContactList.ViewModels
 {
     public class SignUpViewModel : ObservableObject
-    {
+    {   // Set bool variable for check if method is in active mode for activity idicator.
         private bool isBusy;
 
         public bool IsBusy
@@ -16,18 +17,18 @@ namespace ContactList.ViewModels
             set => SetProperty(ref isBusy, value);
         }
 
-        private string username;
-        public string Username
+        private string usernameFromInput;
+        public string UsernameFromInput
         {
-            get => username;
-            set => SetProperty(ref username, value);
+            get => usernameFromInput;
+            set => SetProperty(ref usernameFromInput, value);
         }
 
-        private string password;
-        public string Password
+        private string passwordFromInput;
+        public string PasswordFromInput
         {
-            get => password;
-            set => SetProperty(ref password, value);
+            get => passwordFromInput;
+            set => SetProperty(ref passwordFromInput, value);
         }
 
         public ICommand RegisterCommand { get; }
@@ -41,18 +42,29 @@ namespace ContactList.ViewModels
         {
             IsBusy = true; // Start the activity indicator
 
-            try
+            bool usernameExists = CheckIfUsernameExists(UsernameFromInput);
+
+            if (usernameExists)
+            {   
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                // Aler page for existing user.
+                await Application.Current.MainPage.Navigation.PushModalAsync(new UserExistAlertPage());
+                IsBusy = false; // Stop the activity indicator
+            }
+
+
+            else
             {
                 // Create model for username, password.
                 var user = new UserModel
                 {
-                    Username = Username,
-                    Password = Password
+                    Username = UsernameFromInput,
+                    Password = PasswordFromInput
                 };
 
                 // Simulate a delay using Task.Delay before showing the alert
                 await Task.Delay(1500); // Delay of 1,5 seconds
-                // Use userDataContext to add username, password to the database.
+                                        // Use userDataContext to add username, password to the database.
                 using (var db = new UserDataContext())
                 {
                     db.Users.Add(user);
@@ -62,16 +74,19 @@ namespace ContactList.ViewModels
 
 
                 // Registration success alert.
-                await Application.Current.MainPage.DisplayAlert("Alert", $"Your registration is successful, {username}!", "OK");
+                await Application.Current.MainPage.Navigation.PushModalAsync(new RegistrationSuccessAlertPage());
             }
-            catch (Exception ex)
-            {
-                // Handle the exception here (e.g., display an error message)
-                await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-                IsBusy = false; // Stop the activity indicator
-            }
-               
-          
+
         }
+
+        // Method for check if username exists in database.
+        private static bool CheckIfUsernameExists(string username)
+        {
+            var db = new UserDataContext();
+
+            // Check if a user with the given username exists in the database
+            return db.Users.Any(user => user.Username == username);
+        }
+
     }
 }

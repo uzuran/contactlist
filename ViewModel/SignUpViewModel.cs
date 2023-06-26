@@ -3,8 +3,7 @@ using ContactList.Models;
 using ContactList.View;
 using MvvmHelpers.Commands;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
+
 
 namespace ContactList.ViewModels
 {

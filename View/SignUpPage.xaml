@@ -10,7 +10,7 @@
     <ContentPage.BindingContext>
         <local:SignUpViewModel/>
     </ContentPage.BindingContext>
-
+    
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="220"/>
@@ -61,7 +61,12 @@
 
             <!--Sign in label.-->
             <Label Grid.Row="2" Text="Sign Up to continue." HorizontalOptions="Center" FontSize="Subtitle"/>
+            
+            <StackLayout HorizontalOptions="Center" Grid.Row="2" Padding="25">
+                <Label Text="{Binding CheckIfUsernameIsValid}" TextColor="{Binding UsernameLabelColor}" />
+            </StackLayout>
 
+            
             <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
                 <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
                     <StackLayout Orientation="Horizontal">

@@ -3,12 +3,13 @@ using ContactList.Models;
 using ContactList.View;
 using MvvmHelpers.Commands;
 using System.Windows.Input;
-
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Xaml;
 
 namespace ContactList.ViewModels
 {
     public class SignUpViewModel : ObservableObject
-    {   // Set bool variable for check if method is in active mode for activity idicator.
+    {   // Set bool variable for check if method is in active mode for activity indicator.
         private bool isBusy;
 
         public bool IsBusy
@@ -21,7 +22,45 @@ namespace ContactList.ViewModels
         public string UsernameFromInput
         {
             get => usernameFromInput;
-            set => SetProperty(ref usernameFromInput, value);
+            set
+            {
+                SetProperty(ref usernameFromInput, value);
+                CheckUsername();
+            }
+
+        }
+        // Color for correct format 
+        private Color usernameLabelColor;
+        public Color UsernameLabelColor
+        {
+            get { return usernameLabelColor; }
+            set { SetProperty(ref usernameLabelColor, value); }
+        }
+
+        // Set variable for check if user name is valid.
+        private string checkIfUsernameIsValid;
+
+        public string CheckIfUsernameIsValid
+        {
+            get { return checkIfUsernameIsValid; }
+            set { SetProperty(ref checkIfUsernameIsValid, value); }
+        }
+
+
+        private void CheckUsername()
+        {
+            bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
+
+            if (containsSpace)
+            {
+                CheckIfUsernameIsValid = "Username is in incorrect format.";
+                UsernameLabelColor = Color.FromRgb(255, 0, 0);
+            }   
+            else
+            {
+                CheckIfUsernameIsValid = "Username is in correct format.";
+                UsernameLabelColor = Color.FromRgb(34, 139, 34);
+            }
         }
 
         private string passwordFromInput;
@@ -43,6 +82,7 @@ namespace ContactList.ViewModels
             IsBusy = true; // Start the activity indicator
 
             bool usernameExists = CheckIfUsernameExists(UsernameFromInput);
+            bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
 
             if (usernameExists)
             {   
@@ -52,6 +92,13 @@ namespace ContactList.ViewModels
                 IsBusy = false; // Stop the activity indicator
             }
 
+            else if (containsSpace)
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain spaces.", "Ok");
+                IsBusy = false; // Stop the activity indicator
+            }
 
             else
             {

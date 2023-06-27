@@ -16,7 +16,7 @@ namespace ContactList.ViewModels
             get => isBusy;
             set => SetProperty(ref isBusy, value);
         }
-
+        // Set, get user name from input field.
         private string usernameFromInput;
         public string UsernameFromInput
         {
@@ -29,11 +29,11 @@ namespace ContactList.ViewModels
 
         }
         // Color for correct format 
-        private Color usernameLabelColor;
-        public Color UsernameLabelColor
+        private Color checkIfUsernameIsValidColor;
+        public Color CheckIfUsernameIsValidColor
         {
-            get { return usernameLabelColor; }
-            set { SetProperty(ref usernameLabelColor, value); }
+            get { return checkIfUsernameIsValidColor; }
+            set { SetProperty(ref checkIfUsernameIsValidColor, value); }
         }
 
         // Set variable for check if user name is valid.
@@ -45,7 +45,7 @@ namespace ContactList.ViewModels
             set { SetProperty(ref checkIfUsernameIsValid, value); }
         }
 
-
+        //Check validation of username.
         private void CheckUsername()
         {
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
@@ -53,15 +53,15 @@ namespace ContactList.ViewModels
             if (containsSpace)
             {
                 CheckIfUsernameIsValid = "Username is in incorrect format.";
-                UsernameLabelColor = Color.FromRgb(255, 0, 0);
-            }   
+                CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
+            }
             else
             {
                 CheckIfUsernameIsValid = "Username is in correct format.";
-                UsernameLabelColor = Color.FromRgb(34, 139, 34);
+                CheckIfUsernameIsValidColor = Color.FromRgb(34, 139, 34);
             }
         }
-
+        // Set, get for password from input field.
         private string passwordFromInput;
         public string PasswordFromInput
         {
@@ -76,6 +76,7 @@ namespace ContactList.ViewModels
             RegisterCommand = new AsyncCommand(RegisterAsync);
         }
 
+        // Module for registration users to database.
         private async Task RegisterAsync()
         {
             IsBusy = true; // Start the activity indicator
@@ -84,7 +85,7 @@ namespace ContactList.ViewModels
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
 
             if (usernameExists)
-            {   
+            {
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 // Aler page for existing user.
                 await Application.Current.MainPage.Navigation.PushModalAsync(new UserExistAlertPage());
@@ -110,7 +111,9 @@ namespace ContactList.ViewModels
 
                 // Simulate a delay using Task.Delay before showing the alert
                 await Task.Delay(1500); // Delay of 1,5 seconds
-                                        // Use userDataContext to add username, password to the database.
+
+                // Use userDataContext to add username, password to the database.
+
                 using (var db = new UserDataContext())
                 {
                     db.Users.Add(user);

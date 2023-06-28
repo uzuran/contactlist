@@ -85,7 +85,7 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="password.png"/>
                         </Frame>
-                        <Entry Text="{Binding PasswordFromInput}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding PasswordFromInput}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" IsPassword="True"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

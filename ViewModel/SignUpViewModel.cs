@@ -47,14 +47,24 @@ namespace ContactList.ViewModels
 
         //Check validation of username.
         private void CheckUsername()
-        {
+        {   // If UsernameFromInput contain whitespace true else false.
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
+            
+            // If  UsernameFromInput contain only one char false. 
+            bool containsOnlyOneChar = UsernameFromInput?.Length == 1;
 
             if (containsSpace)
             {
-                CheckIfUsernameIsValid = "Username is in incorrect format.";
+                CheckIfUsernameIsValid = "Username is not in incorrect format.";
                 CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
             }
+
+            else if(containsOnlyOneChar) 
+            {
+                CheckIfUsernameIsValid = "Username is not in incorrect format.";
+                CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
+            }
+
             else
             {
                 CheckIfUsernameIsValid = "Username is in correct format.";
@@ -81,14 +91,25 @@ namespace ContactList.ViewModels
         {
             IsBusy = true; // Start the activity indicator
 
+            
+            // Check if username exist in database.
             bool usernameExists = CheckIfUsernameExists(UsernameFromInput);
+            // Check if username input contain spaces.
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
 
+            // If  UsernameFromInput contain only one char false. 
+            bool containsOnlyOneChar = UsernameFromInput?.Length == 1;
+
+            //Random numbers for generate random name if name exist.
+            var random = new Random();
+            int randomNumber = random.Next(100);
+            int randomNumber2 = random.Next(100);
+            
             if (usernameExists)
             {
                 await Task.Delay(1500); // Delay of 1,5 seconds
-                // Aler page for existing user.
-                await Application.Current.MainPage.Navigation.PushModalAsync(new UserExistAlertPage());
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"The username {usernameFromInput} is exist. Please choose a different username {usernameFromInput + randomNumber}, {usernameFromInput + randomNumber2}.", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 
@@ -97,6 +118,15 @@ namespace ContactList.ViewModels
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 //Contain spaces warning.
                 await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain spaces.", "Ok");
+                IsBusy = false; // Stop the activity indicator
+            }
+
+
+            else if (containsOnlyOneChar)
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain only one char min count of char name is 2.", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 

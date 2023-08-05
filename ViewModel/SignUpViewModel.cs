@@ -3,6 +3,7 @@ using ContactList.Models;
 using ContactList.View;
 using MvvmHelpers.Commands;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 
 namespace ContactList.ViewModels
@@ -49,11 +50,15 @@ namespace ContactList.ViewModels
         private void CheckUsername()
         {   // If UsernameFromInput contain whitespace true else false.
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
-            
+
             // If  UsernameFromInput contain only one char false. 
             bool containsOnlyOneChar = UsernameFromInput?.Length == 1;
 
-            if (containsSpace)
+            // Check if username contain special char.
+            string pattern = @"[^a-zA-Z0-9]";
+            bool regexCeck = Regex.IsMatch(UsernameFromInput, pattern);
+
+            if (containsSpace || regexCeck)
             {
                 CheckIfUsernameIsValid = "Username is not in incorrect format.";
                 CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
@@ -100,6 +105,11 @@ namespace ContactList.ViewModels
             // If  UsernameFromInput contain only one char false. 
             bool containsOnlyOneChar = UsernameFromInput?.Length == 1;
 
+            // Check if username contain special char.
+            string pattern = @"[^a-zA-Z0-9]";
+            bool regexCeck = Regex.IsMatch(UsernameFromInput, pattern);
+
+
             //Random numbers for generate random name if name exist.
             var random = new Random();
             int randomNumber = random.Next(100);
@@ -118,6 +128,14 @@ namespace ContactList.ViewModels
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 //Contain spaces warning.
                 await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain spaces.", "Ok");
+                IsBusy = false; // Stop the activity indicator
+            }
+
+            else if (regexCeck)
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain special char.", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 

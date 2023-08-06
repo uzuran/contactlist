@@ -29,7 +29,7 @@ namespace ContactList.ViewModels
             }
 
         }
-        // Color for correct format 
+        // Color for correct format.
         private Color checkIfUsernameIsValidColor;
         public Color CheckIfUsernameIsValidColor
         {
@@ -64,7 +64,7 @@ namespace ContactList.ViewModels
                 CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
             }
 
-            else if(containsOnlyOneChar) 
+            else if (containsOnlyOneChar)
             {
                 CheckIfUsernameIsValid = "Username is not in incorrect format.";
                 CheckIfUsernameIsValidColor = Color.FromRgb(255, 0, 0);
@@ -76,13 +76,55 @@ namespace ContactList.ViewModels
                 CheckIfUsernameIsValidColor = Color.FromRgb(34, 139, 34);
             }
         }
+
+
         // Set, get for password from input field.
         private string passwordFromInput;
         public string PasswordFromInput
         {
             get => passwordFromInput;
-            set => SetProperty(ref passwordFromInput, value);
+            set
+            {
+
+                SetProperty(ref passwordFromInput, value);
+                CheckPasswordValidation();
+            }
+
         }
+
+        private Color checkIfPasswordIsValidColor;
+        public Color CheckIfPasswordIsValidColor
+        {
+            get { return checkIfPasswordIsValidColor; }
+            set { SetProperty(ref checkIfPasswordIsValidColor, value); }
+        }
+
+        // Set variable for check if user name is valid.
+        private string checkIfPasswordIsValid;
+
+        public string CheckIfPasswordIsValid
+        {
+            get { return checkIfPasswordIsValid; }
+            set { SetProperty(ref checkIfPasswordIsValid, value); }
+        }
+
+        private void CheckPasswordValidation()
+        {
+            // If  UsernameFromInput contain only one char false. 
+            bool checkLengthOfPassword = PasswordFromInput?.Length <= 6;
+            if (checkLengthOfPassword)
+            {
+                CheckIfPasswordIsValid = "Password must be 6 characters or longer.";
+                CheckIfPasswordIsValidColor = Color.FromRgb(255, 0, 0);
+            }
+
+            else
+            {
+                CheckIfPasswordIsValid = "Password is in correct format.";
+                CheckIfPasswordIsValidColor = Color.FromRgb(34, 139, 34);
+            }
+        }
+
 
         public ICommand RegisterCommand { get; }
 
@@ -96,7 +138,7 @@ namespace ContactList.ViewModels
         {
             IsBusy = true; // Start the activity indicator
 
-            
+
             // Check if username exist in database.
             bool usernameExists = CheckIfUsernameExists(UsernameFromInput);
             // Check if username input contain spaces.
@@ -114,7 +156,7 @@ namespace ContactList.ViewModels
             var random = new Random();
             int randomNumber = random.Next(100);
             int randomNumber2 = random.Next(100);
-            
+
             if (usernameExists)
             {
                 await Task.Delay(1500); // Delay of 1,5 seconds

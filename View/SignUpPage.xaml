@@ -61,12 +61,17 @@
 
             <!--Sign in label.-->
             <Label Grid.Row="2" Text="Sign Up to continue." HorizontalOptions="Center" FontSize="Subtitle"/>
-            
+            <!--Label warning for name validation.-->
             <StackLayout HorizontalOptions="Center" Grid.Row="2" Padding="25">
                 <Label Text="{Binding CheckIfUsernameIsValid}" TextColor="{Binding CheckIfUsernameIsValidColor}" />
             </StackLayout>
 
-            
+            <!--Label warning for password validation.-->
+            <StackLayout HorizontalOptions="Center" Grid.Row="4" Padding="5">
+                <Label Text="{Binding CheckIfPasswordIsValid}" TextColor="{Binding CheckIfPasswordIsValidColor}" />
+            </StackLayout>
+
+
             <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
                 <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
                     <StackLayout Orientation="Horizontal">
@@ -79,7 +84,7 @@
             </StackLayout>
 
 
-            <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="CenterAndExpand" Margin="15">
+            <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="CenterAndExpand" Margin="30">
                 <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
                     <StackLayout Orientation="Horizontal">
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">

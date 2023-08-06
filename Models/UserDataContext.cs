@@ -5,7 +5,7 @@ namespace ContactList.Models
 {
     public class UserDataContext : DbContext
     {
-        static readonly string connectionString = "Server=aws.connect.psdb.cloud;Database=contactlist;user=8b6fe1qglgunqdfvs6yo;password=pscale_pw_Y5qKwC6yGxbBMCkRJn01bCY9Mi3JecNO7pinoPjqkCf;SslMode=Required;";
+        static readonly string connectionString = "";
 
         public DbSet<UserModel> Users { get; set; }
 

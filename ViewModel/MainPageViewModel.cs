@@ -1,4 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ContactList.Models;
+using ContactList.View;
+using MvvmHelpers.Commands;
+using System.Windows.Input;
 
 namespace ContactList.ViewModel
 {
@@ -36,7 +40,37 @@ namespace ContactList.ViewModel
 
         }
 
+        static bool IsPasswordValid(string username, string password)
+        {
+            var db = new UserDataContext();
+            
+            var user = db.Users.FirstOrDefault(u => u.Username == username);
 
+            if (user != null) 
+            {
+                return user.Password == password;
+            }
+
+            return false;
+        }
+
+        public ICommand LogInCommand { get; }
+
+        public MainPageViewModel()
+        {
+            LogInCommand = new AsyncCommand(LogInAsync);
+        }
+
+
+        private async Task LogInAsync()
+        {
+            bool checkPasswordValidation = IsPasswordValid(UsernameFromLogInInput, PasswordFromLogInInput);
+
+            if (checkPasswordValidation)
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new ContactListPage());
+            }
+        }
 
     }
 }

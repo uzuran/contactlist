@@ -95,7 +95,8 @@
 
             </StackLayout>
 
-            <Button Grid.Row="6"
+            <Button Command= "{Binding LogInCommand}"
+                    Grid.Row="6"
                     Text="SIGN IN"
                     BackgroundColor="#99ffcc"
                     TextColor="White"

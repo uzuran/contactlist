@@ -67,7 +67,7 @@
             </StackLayout>
 
             <!--Label warning for password validation.-->
-            <StackLayout HorizontalOptions="Center" Grid.Row="4" Padding="5">
+            <StackLayout HorizontalOptions="Center" Grid.Row="4" Padding="10">
                 <Label Text="{Binding CheckIfPasswordIsValid}" TextColor="{Binding CheckIfPasswordIsValidColor}" />
             </StackLayout>
 
@@ -84,7 +84,7 @@
             </StackLayout>
 
 
-            <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="CenterAndExpand" Margin="30">
+            <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="CenterAndExpand" Margin="40">
                 <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
                     <StackLayout Orientation="Horizontal">
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">

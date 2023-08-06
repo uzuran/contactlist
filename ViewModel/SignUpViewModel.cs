@@ -151,6 +151,9 @@ namespace ContactList.ViewModels
             string pattern = @"[^a-zA-Z0-9]";
             bool regexCeck = Regex.IsMatch(UsernameFromInput, pattern);
 
+            // If  UsernameFromInput contain only one char false. 
+            bool checkLengthOfPassword = PasswordFromInput?.Length <= 6;
+
 
             //Random numbers for generate random name if name exist.
             var random = new Random();
@@ -187,6 +190,15 @@ namespace ContactList.ViewModels
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 //Contain spaces warning.
                 await Application.Current.MainPage.DisplayAlert("Alert", $"Your name {usernameFromInput} contain only one char min count of char name is 2.", "Ok");
+                IsBusy = false; // Stop the activity indicator
+            }
+
+
+            else if (checkLengthOfPassword)
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Password must be 6 characters or longer!", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ct="http://schemas.communitytoolkit.org/maui"
              x:Class="ContactList.MainPage"
+             xmlns:local="clr-namespace:ContactList.ViewModel"
              Title="">
+
+
+    <!-- Binding Context-->
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
 
 
     <Grid BackgroundColor="White">
@@ -62,7 +70,7 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="username.png"/>
                         </Frame>
-                        <Entry Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding UsernameFromLogInInput}" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
@@ -74,7 +82,8 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="password.png"/>
                         </Frame>
-                        <Entry Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <!--Password entry.-->
+                        <Entry Text="{Binding PasswordFromLogInInput}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

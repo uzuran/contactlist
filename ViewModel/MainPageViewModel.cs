@@ -18,7 +18,7 @@ namespace ContactList.ViewModel
 
         // Set, get user name from input field.
         private string usernameFromLogInInput;
-        public string UsernameFromLogInInput
+        public string UserNameFromLogInInput
         {
             get => usernameFromLogInInput;
             set
@@ -43,10 +43,10 @@ namespace ContactList.ViewModel
         static bool IsPasswordValid(string username, string password)
         {
             var db = new UserDataContext();
-            
+
             var user = db.Users.FirstOrDefault(u => u.Username == username);
 
-            if (user != null) 
+            if (user != null)
             {
                 return user.Password == password;
             }
@@ -64,12 +64,26 @@ namespace ContactList.ViewModel
 
         private async Task LogInAsync()
         {
-            bool checkPasswordValidation = IsPasswordValid(UsernameFromLogInInput, PasswordFromLogInInput);
+
+            IsBusy = true; // Start the activity indicator
+
+            bool checkPasswordValidation = IsPasswordValid(UserNameFromLogInInput.ToLower(), PasswordFromLogInInput);
 
             if (checkPasswordValidation)
             {
+                await Task.Delay(1500); // Delay of 1,5 seconds
                 await Application.Current.MainPage.Navigation.PushModalAsync(new ContactListPage());
+                isBusy = false; // Stop the activity indicator
             }
+
+            else
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"User or password is incorrect!", "Ok");
+                IsBusy = false; // Stop the activity indicator
+            }
+
         }
 
     }

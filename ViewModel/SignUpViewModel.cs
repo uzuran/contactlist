@@ -111,10 +111,19 @@ namespace ContactList.ViewModels
         private void CheckPasswordValidation()
         {
             // If  UsernameFromInput contain only one char false. 
-            bool checkLengthOfPassword = PasswordFromInput?.Length <= 6;
+            bool checkLengthOfPassword = !string.IsNullOrEmpty(PasswordFromInput) && PasswordFromInput.Length <= 5;
+            
+            bool passContainsSpace = PasswordFromInput?.Contains(' ') ?? false;
+
             if (checkLengthOfPassword)
             {
                 CheckIfPasswordIsValid = "Password must be 6 characters or longer.";
+                CheckIfPasswordIsValidColor = Color.FromRgb(255, 0, 0);
+            }
+
+            else if (passContainsSpace)
+            {
+                CheckIfPasswordIsValid = "Password can not contain spaces.";
                 CheckIfPasswordIsValidColor = Color.FromRgb(255, 0, 0);
             }
 
@@ -139,21 +148,25 @@ namespace ContactList.ViewModels
             IsBusy = true; // Start the activity indicator
 
 
-            // Check if username exist in database.
+            // Check if user name exist in database.
             bool usernameExists = CheckIfUsernameExists(UsernameFromInput);
-            // Check if username input contain spaces.
+            // Check if user name input contain spaces.
             bool containsSpace = UsernameFromInput?.Contains(' ') ?? false;
+
+            // Check password if pass contain spaces.
+            bool passContainsSpace = PasswordFromInput?.Contains(' ') ?? false;
 
             // If  UsernameFromInput contain only one char false. 
             bool containsOnlyOneChar = UsernameFromInput?.Length == 1;
 
-            // Check if username contain special char.
+            // Check if user name contain special char.
             string pattern = @"[^a-zA-Z0-9]";
             bool regexCeck = Regex.IsMatch(UsernameFromInput, pattern);
 
-            // If  UsernameFromInput contain only one char false. 
-            bool checkLengthOfPassword = PasswordFromInput?.Length <= 6;
+            //Check for length of password. 
+            bool checkLengthOfPassword = !string.IsNullOrEmpty(PasswordFromInput) && PasswordFromInput.Length <= 5;
 
+            
 
             //Random numbers for generate random name if name exist.
             var random = new Random();
@@ -164,7 +177,7 @@ namespace ContactList.ViewModels
             {
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 //Contain spaces warning.
-                await Application.Current.MainPage.DisplayAlert("Alert", $"The username {usernameFromInput} is exist. Please choose a different username {usernameFromInput + randomNumber}, {usernameFromInput + randomNumber2}.", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Alert", $"The user name {usernameFromInput} is exist. Please choose a different user name {usernameFromInput + randomNumber}, {usernameFromInput + randomNumber2}.", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 
@@ -202,19 +215,27 @@ namespace ContactList.ViewModels
                 IsBusy = false; // Stop the activity indicator
             }
 
+            else if (passContainsSpace)
+            {
+                await Task.Delay(1500); // Delay of 1,5 seconds
+                //Contain spaces warning.
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Password can not contain spaces!", "Ok"); 
+                IsBusy = false; // Stop the activity indicator
+            }
+
             else
             {
-                // Create model for username, password.
+                // Create model for user name, password.
                 var user = new UserModel
                 {
-                    Username = UsernameFromInput,
+                    Username = UsernameFromInput.ToLower(),
                     Password = PasswordFromInput
                 };
 
                 // Simulate a delay using Task.Delay before showing the alert
                 await Task.Delay(1500); // Delay of 1,5 seconds
 
-                // Use userDataContext to add username, password to the database.
+                // Use userDataContext to add user name, password to the database.
 
                 using (var db = new UserDataContext())
                 {
@@ -238,6 +259,8 @@ namespace ContactList.ViewModels
             // Check if a user with the given username exists in the database
             return db.Users.Any(user => user.Username == username);
         }
+
+
 
     }
 }

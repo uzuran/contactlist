@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ct="http://schemas.communitytoolkit.org/maui"
              x:Class="ContactList.MainPage"
+             xmlns:local="clr-namespace:ContactList.ViewModel"
              Title="">
+
+
+    <!-- Binding Context-->
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
 
 
     <Grid BackgroundColor="White">
@@ -62,7 +70,7 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="username.png"/>
                         </Frame>
-                        <Entry Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding UsernameFromLogInInput}" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
@@ -74,7 +82,8 @@
                         <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                             <Image Source="password.png"/>
                         </Frame>
-                        <Entry Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        <!--Password entry.-->
+                        <Entry IsPassword="True" Text="{Binding PasswordFromLogInInput}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>
@@ -86,7 +95,8 @@
 
             </StackLayout>
 
-            <Button Grid.Row="6"
+            <Button Command= "{Binding LogInCommand}"
+                    Grid.Row="6"
                     Text="SIGN IN"
                     BackgroundColor="#99ffcc"
                     TextColor="White"
@@ -95,7 +105,11 @@
                     WidthRequest="200"
                     HeightRequest="50"
                     Margin="0,15,0,0"/>
-
+            <!-- Activity indicator -->
+            <StackLayout>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            </StackLayout>
+            
             <StackLayout Grid.Row="7" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Label Text="New user?" TextColor="DarkGray" FontSize="Small" Margin="0,26,0,0"/>
                 <Button Text=" Sign Up" Clicked="GoToSignUpPage" TextColor="SkyBlue" BackgroundColor="White" FontAttributes="Bold" FontSize="Small" Margin="0,0,0,28"/>

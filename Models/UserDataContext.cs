@@ -5,33 +5,38 @@ namespace ContactList.Models
 {
     public class UserDataContext : DbContext
     {
-        static readonly string connectionString = "";
+         //readonly string connectionString = "Server=aws.connect.psdb.cloud;Database=contactlist;user=3o19iqi6yyt5zwmyg0jp;password=pscale_pw_91Jz8PfqDJM5sPsEFUJabWIygnYS3bBZVEMCPVV9xTw;SslMode=Required;";
 
         public DbSet<UserModel> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        //}
 
         // Here, i try to read connection string from appsettings.json file. ------->>>
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        // Build configuration
-        //        IConfigurationRoot configuration = new ConfigurationBuilder()
-        //            .SetBasePath(Directory.GetCurrentDirectory()) // NuGet Microsoft.Extensions.Configuration.Json
-        //            .AddJsonFile("appsettings.json")
-        //            .Build();
+        public UserDataContext(DbContextOptions<UserDataContext> dbContextOptions): base(dbContextOptions)
+        {
+            
+        }
 
-        //        // Get connection string from appsettings.json
-        //        string connectionString = configuration.GetConnectionString("Default");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    // Build configuration
+            //    //IConfigurationRoot configuration = new ConfigurationBuilder()
+            //        //.SetBasePath(Directory.GetCurrentDirectory()) // NuGet Microsoft.Extensions.Configuration.Json
+            //        //.AddJsonFile("appsettings.json")
+            //        //.Build();
 
-        //        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-        //    }
-        //}
+            //    // Get connection string from appsettings.json
+            //    //string connectionString = configuration.GetConnectionString("Default");
+
+            //    optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            //}
+        }
 
 
     }

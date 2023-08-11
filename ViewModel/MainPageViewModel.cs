@@ -40,11 +40,18 @@ namespace ContactList.ViewModel
 
         }
 
-        static bool IsPasswordValid(string username, string password)
-        {
-            var db = new UserDataContext();
+        private readonly UserDataContext userDataContext;
 
-            var user = db.Users.FirstOrDefault(u => u.Username == username);
+        public MainPageViewModel(UserDataContext userDataContext)
+        {
+            this.userDataContext = userDataContext;
+        }
+
+        bool IsPasswordValid(string username, string password)
+        {
+            
+
+            var user = userDataContext.Users.FirstOrDefault(u => u.Username == username);
 
             if (user != null)
             {

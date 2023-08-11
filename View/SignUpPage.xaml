@@ -6,10 +6,7 @@
              xmlns:local="clr-namespace:ContactList.ViewModels"
              Title="">
     
-    <!-- Binding Context-->
-    <ContentPage.BindingContext>
-        <local:SignUpViewModel/>
-    </ContentPage.BindingContext>
+
     
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>

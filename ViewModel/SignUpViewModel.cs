@@ -4,14 +4,20 @@ using ContactList.View;
 using MvvmHelpers.Commands;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
-
+using System.Drawing.Text;
 
 namespace ContactList.ViewModels
 {
     public class SignUpViewModel : ObservableObject
-    {   // Set bool variable for check if method is in active mode for activity indicator.
-        private bool isBusy;
+    {
+        public SignUpViewModel()
+        {
+            // Initialize properties and perform any necessary setup
+        }
 
+
+        // Set bool variable for check if method is in active mode for activity indicator.
+        private bool isBusy;
         public bool IsBusy
         {
             get => isBusy;
@@ -112,7 +118,7 @@ namespace ContactList.ViewModels
         {
             // If  UsernameFromInput contain only one char false. 
             bool checkLengthOfPassword = !string.IsNullOrEmpty(PasswordFromInput) && PasswordFromInput.Length <= 5;
-            
+
             bool passContainsSpace = PasswordFromInput?.Contains(' ') ?? false;
 
             if (checkLengthOfPassword)
@@ -136,10 +142,11 @@ namespace ContactList.ViewModels
 
 
         public ICommand RegisterCommand { get; }
-
-        public SignUpViewModel()
+        private readonly UserDataContext _userDataContext;
+        public SignUpViewModel(UserDataContext userDataContext)
         {
             RegisterCommand = new AsyncCommand(RegisterAsync);
+            _userDataContext = userDataContext;
         }
 
         // Module for registration users to database.
@@ -166,7 +173,7 @@ namespace ContactList.ViewModels
             //Check for length of password. 
             bool checkLengthOfPassword = !string.IsNullOrEmpty(PasswordFromInput) && PasswordFromInput.Length <= 5;
 
-            
+
 
             //Random numbers for generate random name if name exist.
             var random = new Random();
@@ -219,7 +226,7 @@ namespace ContactList.ViewModels
             {
                 await Task.Delay(1500); // Delay of 1,5 seconds
                 //Contain spaces warning.
-                await Application.Current.MainPage.DisplayAlert("Alert", $"Password can not contain spaces!", "Ok"); 
+                await Application.Current.MainPage.DisplayAlert("Alert", $"Password can not contain spaces!", "Ok");
                 IsBusy = false; // Stop the activity indicator
             }
 
@@ -236,12 +243,9 @@ namespace ContactList.ViewModels
                 await Task.Delay(1500); // Delay of 1,5 seconds
 
                 // Use userDataContext to add user name, password to the database.
+                _userDataContext.Users.Add(user);
+                _userDataContext.SaveChanges();
 
-                using (var db = new UserDataContext())
-                {
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                }
                 IsBusy = false; // Stop the activity indicator
 
 
@@ -252,12 +256,12 @@ namespace ContactList.ViewModels
         }
 
         // Method for check if username exists in database.
-        private static bool CheckIfUsernameExists(string username)
+        private bool CheckIfUsernameExists(string username)
         {
-            var db = new UserDataContext();
+
 
             // Check if a user with the given username exists in the database
-            return db.Users.Any(user => user.Username == username);
+            return _userDataContext.Users.Any(user => user.Username == username);
         }
 
 

@@ -1,125 +1,206 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ct="http://schemas.communitytoolkit.org/maui"
-             x:Class="ContactList.MainPage"
-             xmlns:local="clr-namespace:ContactList.ViewModel"
-             Title="">
-
-
-    <!-- Binding Context-->
-    <ContentPage.BindingContext>
-        <local:MainPageViewModel/>
-    </ContentPage.BindingContext>
-
+<ContentPage
+    x:Class="ContactList.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ct="http://schemas.communitytoolkit.org/maui"
+    xmlns:local="clr-namespace:ContactList.ViewModel"
+    Title="">
 
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="220"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-            
+            <RowDefinition Height="220" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+
         </Grid.RowDefinitions>
 
-        <!-- Top background-->
+        <!--  Top background  -->
         <Path
-              Data="m0,-.56999l609.00003,0l0,150.3107c-301.50001,-60 -350.50001,135.42112 -609.00003,42.50003l0,-300.81073z"
-              Stroke="white" 
-              Fill="#99ffcc"
-              HorizontalOptions="Center"/>
+            Data="m0,-.56999l609.00003,0l0,150.3107c-301.50001,-60 -350.50001,135.42112 -609.00003,42.50003l0,-300.81073z"
+            Fill="#99ffcc"
+            HorizontalOptions="Center"
+            Stroke="white" />
 
         <StackLayout>
-            <!--Frame for immage-->
-            <Frame  
-                BackgroundColor="SkyBlue"
-                HeightRequest="100"
-                WidthRequest="100"
-                CornerRadius="50" Padding="0"
+            <!--  Frame for immage  -->
+            <Frame
                 Margin="0,100,0,0"
-                HorizontalOptions="Center">
-                
-                <!--Logo immage-->
-                <Image Source="logo.png"/>
+                Padding="0"
+                BackgroundColor="SkyBlue"
+                CornerRadius="50"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                WidthRequest="100">
+
+                <!--  Logo immage  -->
+                <Image Source="logo.png" />
             </Frame>
         </StackLayout>
 
-        <Grid RowSpacing="7"
-              Grid.Row="1"
-              Margin="20,20,20,0">
+        <Grid
+            Grid.Row="1"
+            Margin="20,20,20,0"
+            RowSpacing="7">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--Welcome label.-->
-            <Label Grid.Row="1" Text="Welcome!" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" Padding="0" Margin="0"/>
+            <!--  Welcome label.  -->
+            <Label
+                Grid.Row="1"
+                Margin="0"
+                Padding="0"
+                FontAttributes="Bold"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Text="Welcome!" />
 
-            <!--Sign in label.-->
-            <Label Grid.Row="2" Text="Sign in to continue." HorizontalOptions="Center" FontSize="Subtitle"/>
+            <!--  Sign in label.  -->
+            <Label
+                Grid.Row="2"
+                FontSize="Subtitle"
+                HorizontalOptions="Center"
+                Text="Sign in to continue." />
 
-            <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
-                    <StackLayout Orientation="Horizontal">
-                        <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                            <Image Source="username.png"/>
-                        </Frame>
-                        <Entry Text="{Binding UsernameFromLogInInput}" Placeholder="Username" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-
-
-            <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="CenterAndExpand" Margin="15">
-                <Frame BackgroundColor="Transparent" BorderColor="#99ffcc" Padding="0" WidthRequest="250" CornerRadius="30">
-                    <StackLayout Orientation="Horizontal">
-                        <Frame BackgroundColor="#99ffcc" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                            <Image Source="password.png"/>
-                        </Frame>
-                        <!--Password entry.-->
-                        <Entry IsPassword="True" Text="{Binding PasswordFromLogInInput}" Placeholder="Password" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-
-            <StackLayout Grid.Row="5" Orientation="Horizontal" Margin="0,20,0,0" Padding="0" HorizontalOptions="Center">
-                <CheckBox IsChecked="False"/>
-                <Label Text="Remember Me " TextColor="DarkGray" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <Label Text="Forgot Password" TextColor="#99ffcc" FontAttributes="Bold" VerticalOptions="Center" Margin="0,0,15,0"/>
-
-            </StackLayout>
-
-            <Button Command= "{Binding LogInCommand}"
-                    Grid.Row="6"
-                    Text="SIGN IN"
-                    BackgroundColor="#99ffcc"
-                    TextColor="White"
-                    FontAttributes="Bold"
+            <StackLayout
+                Grid.Row="3"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Vertical">
+                <Frame
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="#99ffcc"
                     CornerRadius="30"
-                    WidthRequest="200"
-                    HeightRequest="50"
-                    Margin="0,15,0,0"/>
-            <!-- Activity indicator -->
-            <StackLayout>
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                    WidthRequest="250">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame
+                            Margin="5"
+                            Padding="0"
+                            BackgroundColor="#99ffcc"
+                            CornerRadius="30"
+                            HeightRequest="40"
+                            WidthRequest="40">
+                            <Image Source="username.png" />
+                        </Frame>
+                        <Entry
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Username"
+                            Text="{Binding UsernameFromLogInInput}"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Frame>
             </StackLayout>
-            
-            <StackLayout Grid.Row="7" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Label Text="New user?" TextColor="DarkGray" FontSize="Small" Margin="0,26,0,0"/>
-                <Button Text=" Sign Up" Clicked="GoToSignUpPage" TextColor="SkyBlue" BackgroundColor="White" FontAttributes="Bold" FontSize="Small" Margin="0,0,0,28"/>
+
+
+            <StackLayout
+                Grid.Row="4"
+                Margin="15"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Vertical">
+                <Frame
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="#99ffcc"
+                    CornerRadius="30"
+                    WidthRequest="250">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame
+                            Margin="5"
+                            Padding="0"
+                            BackgroundColor="#99ffcc"
+                            CornerRadius="30"
+                            HeightRequest="40"
+                            WidthRequest="40">
+                            <Image Source="password.png" />
+                        </Frame>
+                        <!--  Password entry.  -->
+                        <Entry
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            IsPassword="True"
+                            Placeholder="Password"
+                            Text="{Binding PasswordFromLogInInput}"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="5"
+                Margin="0,20,0,0"
+                Padding="0"
+                HorizontalOptions="Center"
+                Orientation="Horizontal">
+                <CheckBox IsChecked="False" />
+                <Label
+                    FontSize="Small"
+                    HorizontalTextAlignment="Center"
+                    Text="Remember Me "
+                    TextColor="DarkGray"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    Margin="0,0,15,0"
+                    FontAttributes="Bold"
+                    Text="Forgot Password"
+                    TextColor="#99ffcc"
+                    VerticalOptions="Center" />
+
+            </StackLayout>
+
+            <Button
+                Grid.Row="6"
+                Margin="0,15,0,0"
+                BackgroundColor="#99ffcc"
+                Command="{Binding LogInCommand}"
+                CornerRadius="30"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="SIGN IN"
+                TextColor="White"
+                WidthRequest="200" />
+            <!--  Activity indicator  -->
+            <StackLayout>
+                <ActivityIndicator
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="7"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal">
+                <Label
+                    Margin="0,26,0,0"
+                    FontSize="Small"
+                    Text="New user?"
+                    TextColor="DarkGray" />
+                <Button
+                    Margin="0,0,0,28"
+                    BackgroundColor="White"
+                    Clicked="GoToSignUpPage"
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    Text=" Sign Up"
+                    TextColor="SkyBlue" />
             </StackLayout>
 
 
         </Grid>
 
-        
-        
+
+
     </Grid>
-    
+
 </ContentPage>

@@ -40,18 +40,18 @@ namespace ContactList.ViewModel
 
         }
 
-        private readonly UserDataContext userDataContext;
+        private readonly UserDataContext _userDataContext;
 
         public MainPageViewModel(UserDataContext userDataContext)
         {
-            this.userDataContext = userDataContext;
+            _userDataContext = userDataContext;
         }
 
         bool IsPasswordValid(string username, string password)
         {
             
 
-            var user = userDataContext.Users.FirstOrDefault(u => u.Username == username);
+            var user = _userDataContext.Users.FirstOrDefault(u => u.Username == username);
 
             if (user != null)
             {

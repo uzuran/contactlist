@@ -1,9 +1,12 @@
+using ContactList.ViewModel;
+
 namespace ContactList;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    public MainPage(MainPageViewModel mainPageViewModel)
     {
+        BindingContext = mainPageViewModel;
         InitializeComponent();
     }
 

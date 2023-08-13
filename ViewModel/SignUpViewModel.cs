@@ -10,11 +10,6 @@ namespace ContactList.ViewModels
 {
     public class SignUpViewModel : ObservableObject
     {
-        public SignUpViewModel()
-        {
-            // Initialize properties and perform any necessary setup
-        }
-
 
         // Set bool variable for check if method is in active mode for activity indicator.
         private bool isBusy;
@@ -140,9 +135,9 @@ namespace ContactList.ViewModels
             }
         }
 
-
         public ICommand RegisterCommand { get; }
         private readonly UserDataContext _userDataContext;
+
         public SignUpViewModel(UserDataContext userDataContext)
         {
             RegisterCommand = new AsyncCommand(RegisterAsync);
@@ -258,7 +253,6 @@ namespace ContactList.ViewModels
         // Method for check if username exists in database.
         private bool CheckIfUsernameExists(string username)
         {
-
 
             // Check if a user with the given username exists in the database
             return _userDataContext.Users.Any(user => user.Username == username);
